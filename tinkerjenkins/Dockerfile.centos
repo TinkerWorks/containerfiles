@@ -4,25 +4,26 @@ USER root
 
 # Kubernetes automation
 COPY kubernetes.repo /etc/yum.repos.d/kubernetes.repo
-RUN dnf install -y kubectl
+RUN yum install -y kubectl
 
 # we want to build stuff
-RUN dnf groupinstall -y "Development Tools"
+RUN yum groupinstall -y "Development Tools"
 
 #buildah stuff
-RUN dnf install -y buildah
+RUN yum install -y buildah
 # Adjust storage.conf to enable Fuse storage.
 #RUN sed -i -e 's|^driver = "overlay"|driver = "vfs"|g' /etc/containers/storage.conf
 RUN sed -i -e 's|^#mount_program|mount_program|g' -e '/additionalimage.*/a "/var/lib/shared",' /etc/containers/storage.conf
 ENV _BUILDAH_STARTED_IN_USERNS="" BUILDAH_ISOLATION=chroot
 
+RUN yum install epel-release
 # python stuff
-RUN dnf install -y python3 python3-pip python3-devel
-RUN dnf install -y python38 python38-pip python38-devel
+RUN yum install -y python3 python3-pip python3-devel
+RUN yum install -y python36 python36-pip python36-devel
 
 # Consuela stuff
-RUN dnf install -y http://ccrypt.sourceforge.net/download/1.11/ccrypt-1.11-1.x86_64.rpm
-RUN dnf install -y libguestfs-tools
+RUN yum install -y http://ccrypt.sourceforge.net/download/1.11/ccrypt-1.11-1.x86_64.rpm
+RUN yum install -y libguestfs-tools
 
 RUN pip3 install platformio
 
