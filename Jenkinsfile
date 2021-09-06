@@ -1,56 +1,47 @@
 #!/usr/bin/env groovy
 String daily_cron_string = BRANCH_NAME == "master" ? "@daily" : ""
 
-pipeline {
-    agent any
 
+pipeline {
+    agent {
+        kubernetes {
+            defaultContainer 'buildah'
+            yamlFile 'kubepods.yaml'
+        }
+    }
     triggers { cron(daily_cron_string) }
 
     stages {
-        stage('... Environment interrogation ...') {
-            steps {
-                echo 'Environment:'
-                sh "env"
-                echo 'Buildah info:'
-                sh "buildah info"
-            }
-        }
-        stage('... Running ...') {
-            parallel {
-                stage ('Jenkins') {
-                    steps {
-                        ansiColor('xterm') {
-                            echo '... Building ...'
-                            sh "buildah bud -t tinkerjenkins -f Dockerfile.centos tinkerjenkins"
-                            sh "buildah push tinkerjenkins docker://registry.tinker.haus/tinkerjenkins:centos"
-                        }
+        stage('... Build ...') {
+            matrix {
+                axes {
+                    axis {
+                        name 'PROJECT'
+                        values 'tinkernextcloud', 'tinkertransmission'
                     }
                 }
-                stage ('nextcloud') {
-                    steps {
-                        ansiColor('xterm') {
-                            echo '... Building ...'
-                            sh "buildah bud -t tinkernextcloud -f Dockerfile tinkernextcloud"
-                            sh "buildah push tinkernextcloud docker://registry.tinker.haus/tinkernextcloud:latest"
+                stages {
+                    stage('Check') {
+                        steps{
+                            echo "Project: ${PROJECT}"
+                            sh "env"
+                            sh "cat /etc/os-release"
+                            sh "whoami"
+                            sh "buildah info"
                         }
                     }
-                }
-                stage ('transmission') {
-                    steps {
-                        ansiColor('xterm') {
-                            echo '... Building ...'
-                            sh "buildah bud -t tinkertransmission -f Dockerfile tinkertransmission"
-                            sh "buildah push tinkertransmission docker://registry.tinker.haus/tinkertransmission:latest"
+                    stage('Build') {
+                        steps{
+                            sh "buildah bud -t ${PROJECT} -f Dockerfile ${PROJECT}"
+                        }
+                    }
+                    stage('Push') {
+                        steps{
+                            sh "buildah push ${PROJECT} docker://registry.tinker.haus/${PROJECT}:latest"
                         }
                     }
                 }
             }
         }
-        stage('... Cleanup ...') {
-            steps {
-                sh "buildah rmi -a"
-            }
-        }
-
     }
 }

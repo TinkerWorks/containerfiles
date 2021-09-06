@@ -1,4 +1,4 @@
-FROM nextcloud:fpm
+FROM docker.io/library/nextcloud:fpm
 
 # Work-around for jre installs
 RUN mkdir -p /usr/share/man/man1
