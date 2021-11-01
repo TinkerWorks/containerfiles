@@ -17,6 +17,21 @@ spec:
     - 99d
     securityContext:
       capabilities:
-        add:  #["SYS_ADMIN", "MKNOD"]
-         - ALL
-#        privileged: true   ###Here is what you are looking for
+        add:
+          - 'CHOWN'
+          - 'DAC_OVERRIDE'
+          - 'FSETID'
+          - 'FOWNER'
+          - 'MKNOD'
+          - 'SETGID'
+          - 'SETUID'
+          - 'SETFCAP'
+          - 'SETPCAP'
+          - 'NET_BIND_SERVICE'
+          - 'SYS_CHROOT'
+          - 'KILL'
+          - 'AUDIT_WRITE'
+          - 'MKNOD'
+          - 'SETUID'
+          - 'SETGID'
+          - 'SYS_CHROOT'
