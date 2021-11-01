@@ -20,11 +20,3 @@ spec:
         add:  #["SYS_ADMIN", "MKNOD"]
          - ALL
 #        privileged: true   ###Here is what you are looking for
-    volumeMounts:
-      - mountPath: /dev/fuse
-        name: dev-fuse
-  volumes:
-    - name: dev-fuse
-      hostPath:
-        path: /dev/fuse
-        type: CharDevice
