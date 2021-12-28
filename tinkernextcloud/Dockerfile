@@ -10,6 +10,8 @@ RUN apt-get update && \
     apt-get install -y ffmpeg imagemagick ghostscript && \
      rm -rf /var/lib/apt/lists/*
 
+RUN usermod -a -G users www-data
+
 # Fix PolicyMap for ImageMagick https://www.allerstorfer.at/nextcloud-install-preview-generator/
 RUN sed -i 's/domain="coder" rights="none"/domain="coder" rights="read|write"/g' /etc/ImageMagick-6/policy.xml
 
