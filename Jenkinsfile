@@ -24,10 +24,12 @@ pipeline {
                     stage('Check') {
                         steps{
                             echo "Project: ${PROJECT}"
-                            sh "env"
-                            sh "cat /etc/os-release"
-                            sh "whoami"
-                            sh "buildah info"
+                            sh """
+                              env
+                              cat /etc/os-release
+                              whoami
+                              buildah info
+                            """
                         }
                     }
                     stage('Build') {
