@@ -1,3 +1,4 @@
 plugins:
   - artifactId: ansicolor
   - artifactId: blueocean
+  - artifactId: kubernetes
