@@ -17,7 +17,7 @@ pipeline {
                 axes {
                     axis {
                         name 'PROJECT'
-                        values 'tinkernextcloud', 'tinkertransmission', 'tinkertasmota'
+                        values 'tinkernextcloud', 'tinkertransmission', 'tinkertasmota', 'tinkerjenkins'
                     }
                 }
                 stages {
