@@ -2,3 +2,23 @@ plugins:
   - artifactId: ansicolor
   - artifactId: blueocean
   - artifactId: kubernetes
+  - artifactId: influxdb
+  - artifactId: git
+  - artifactId: github-branch-source
+  - artifactId: github
+  - artifactId: xunit
+  - artifactId: matrix-auth
+  - artifactId: ws-cleanup
+  - artifactId: ssh-slaves
+  - artifactId: email-ext
+  - artifactId: workflow-aggregator
+  - artifactId: pipeline-github-lib
+  - artifactId: pipeline-rest-api
+  - artifactId: pipeline-stage-view
+  - artifactId: timestamper
+  - artifactId: build-timeout
+  - artifactId: copyartifact
+  - artifactId: ldap
+  - artifactId: sshd # just for the updates
+  - artifactId: command-launcher # just for the updates
+  - artifactId: jdk-tool # just for the updates
