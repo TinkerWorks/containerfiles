@@ -35,3 +35,9 @@ spec:
           - 'SETUID'
           - 'SETGID'
           - 'SYS_CHROOT'
+  - name: kubectl
+    image: quay.io/karmab/kubectl
+    command:
+    - sleep
+    args:
+    - 999999

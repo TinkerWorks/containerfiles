@@ -38,10 +38,35 @@ pipeline {
                         }
                     }
                     stage('Push') {
+                        when {
+                            anyOf {
+                                branch 'master'
+                                branch 'deploy'
+                            }
+                        }
                         steps{
                             sh "buildah push ${PROJECT} docker://registry.tinker.haus/${PROJECT}:latest"
                         }
                     }
+                }
+            }
+        }
+        stage('... Rollout ...') {
+            when {
+                anyOf {
+                    branch 'master'
+                    branch 'deploy'
+                }
+            }
+            steps{
+                container('kubectl') {
+                    sh '''
+                      namespaces=$(kubectl get namespaces | grep -v NAME | grep -v kube | awk "{print $1}")
+                      for ns in $namespaces ; do
+                        kubectl rollout restart -n $ns deployments
+                        kubectl rollout restart -n $ns daemonsets
+                      done
+                    '''
                 }
             }
         }
