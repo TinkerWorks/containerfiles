@@ -11,7 +11,22 @@ pipeline {
     }
     triggers { cron(daily_cron_string) }
 
+    environment {
+        REGISTRY_AUTH_FILE = '/buildah-auth/auth.json'
+    }
+
     stages {
+       stage('Check') {
+         steps{
+           sh """
+             env
+             cat /etc/os-release
+             whoami
+             buildah info
+           """
+         }
+        }
+
         stage('... Build ...') {
             matrix {
                 axes {
@@ -21,27 +36,41 @@ pipeline {
                     }
                 }
                 stages {
-                    stage('Check') {
-                        steps{
-                            echo "Project: ${PROJECT}"
-                            sh """
-                              env
-                              cat /etc/os-release
-                              whoami
-                              buildah info
-                            """
-                        }
-                    }
                     stage('Build') {
                         steps{
                             sh "buildah bud -t ${PROJECT} -f Dockerfile ${PROJECT}"
                         }
                     }
                     stage('Push') {
+                        when {
+                            anyOf {
+                                branch 'master'
+                                branch 'deploy'
+                            }
+                        }
                         steps{
                             sh "buildah push ${PROJECT} docker://registry.tinker.haus/${PROJECT}:latest"
                         }
                     }
+                }
+            }
+        }
+        stage('... Rollout ...') {
+            when {
+                anyOf {
+                    branch 'master'
+                    branch 'deploy'
+                }
+            }
+            steps{
+                container('kubectl') {
+                    sh '''
+                      namespaces=$(kubectl get namespaces | grep -v NAME | grep -v kube | awk "{print $1}")
+                      for ns in $namespaces ; do
+                        kubectl rollout restart -n $ns deployments
+                        kubectl rollout restart -n $ns daemonsets
+                      done
+                    '''
                 }
             }
         }

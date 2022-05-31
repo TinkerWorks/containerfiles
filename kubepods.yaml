@@ -35,3 +35,16 @@ spec:
           - 'SETUID'
           - 'SETGID'
           - 'SYS_CHROOT'
+    volumeMounts:
+    - name: buildah-auth
+      mountPath: /buildah-auth
+  - name: kubectl
+    image: quay.io/karmab/kubectl
+    command:
+    - sleep
+    args:
+    - 999999
+  volumes:
+  - name: buildah-auth
+    configMap:
+      name: buildah-auth
