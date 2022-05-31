@@ -11,7 +11,22 @@ pipeline {
     }
     triggers { cron(daily_cron_string) }
 
+    environment {
+        REGISTRY_AUTH_FILE = '/buildah-auth/auth.json'
+    }
+
     stages {
+       stage('Check') {
+         steps{
+           sh """
+             env
+             cat /etc/os-release
+             whoami
+             buildah info
+           """
+         }
+        }
+
         stage('... Build ...') {
             matrix {
                 axes {
@@ -21,17 +36,6 @@ pipeline {
                     }
                 }
                 stages {
-                    stage('Check') {
-                        steps{
-                            echo "Project: ${PROJECT}"
-                            sh """
-                              env
-                              cat /etc/os-release
-                              whoami
-                              buildah info
-                            """
-                        }
-                    }
                     stage('Build') {
                         steps{
                             sh "buildah bud -t ${PROJECT} -f Dockerfile ${PROJECT}"
