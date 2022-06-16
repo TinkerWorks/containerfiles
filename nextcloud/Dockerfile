@@ -47,4 +47,5 @@ RUN usermod -a -G users,usergroup0,usergroup1,usergroup2,usergroup3,usergroup4,u
 # Fix PolicyMap for ImageMagick https://www.allerstorfer.at/nextcloud-install-preview-generator/
 RUN sed -i 's/domain="coder" rights="none"/domain="coder" rights="read|write"/g' /etc/ImageMagick-6/policy.xml
 
-
+# FIX WARNING: [pool www] server reached pm.max_children setting (5), consider raising it
+RUN sed -i 's/pm.max_children = 5/pm.max_children = 50/g' /usr/local/etc/php-fpm.d/www.conf
