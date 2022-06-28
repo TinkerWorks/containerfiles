@@ -7,6 +7,7 @@ plugins:
   - artifactId: github-branch-source
   - artifactId: github
   - artifactId: xunit
+  - artifactId: junit
   - artifactId: matrix-auth
   - artifactId: ws-cleanup
   - artifactId: ssh-slaves
