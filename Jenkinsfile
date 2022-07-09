@@ -32,7 +32,7 @@ pipeline {
                 axes {
                     axis {
                         name 'PROJECT'
-                        values 'nextcloud', 'transmission', 'pushgetserver', 'jenkins'
+                        values 'nextcloud', 'transmission', 'pushgetserver', 'jenkins', 'homeassistant'
                     }
                 }
                 stages {
