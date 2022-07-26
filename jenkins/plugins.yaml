@@ -23,3 +23,9 @@ plugins:
   - artifactId: sshd # just for the updates
   - artifactId: command-launcher # just for the updates
   - artifactId: jdk-tool # just for the updates
+  - artifactId: instance-identity
+  - artifactId: mailer
+  - artifactId: blueocean-jwt
+  - artifactId: blueocean-pipeline-api-impl
+  - artifactId: blueocean-bitbucket-pipeline
+  
