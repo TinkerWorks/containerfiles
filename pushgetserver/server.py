@@ -2,7 +2,14 @@
 
 import argparse
 import http.server
+import signal
+import sys
 import os
+
+def termhandler(signal_received, frame):
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, termhandler)
 
 class HTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_PUT(self):
