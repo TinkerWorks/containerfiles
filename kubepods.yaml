@@ -4,8 +4,6 @@ metadata:
   labels:
     some-label: somelabelvalue
   namespace: jenkins
-  annotations:
-    container.apparmor.security.beta.kubernetes.io/buildah: unconfined
 spec:
   containers:
   - name: buildah
