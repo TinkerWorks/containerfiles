@@ -13,6 +13,9 @@ spec:
     - sleep
     args:
     - 99d
+    env:
+      - name: STORAGE_DRIVER
+        value: "vfs"
     securityContext:
       capabilities:
         add:
