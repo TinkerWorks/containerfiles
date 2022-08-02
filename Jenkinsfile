@@ -11,10 +11,6 @@ pipeline {
     }
     triggers { cron(daily_cron_string) }
 
-    environment {
-        REGISTRY_AUTH_FILE = '/buildah-auth/auth.json'
-    }
-
     stages {
        stage('Check') {
          steps{
