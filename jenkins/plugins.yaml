@@ -28,4 +28,5 @@ plugins:
   - artifactId: blueocean-jwt
   - artifactId: blueocean-pipeline-api-impl
   - artifactId: blueocean-bitbucket-pipeline
+  - artifactId: embeddable-build-status
   
