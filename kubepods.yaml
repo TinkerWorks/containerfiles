@@ -16,6 +16,10 @@ spec:
     env:
       - name: STORAGE_DRIVER
         value: "vfs"
+      - name: BUILDAH_ISOLATION
+        value: "chroot"
+      - name: _BUILDAH_STARTED_IN_USERNS
+        value: ""
     securityContext:
       capabilities:
         add:
