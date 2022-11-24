@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: buildah
-    image: quay.io/buildah/stable:latest
+    image: quay.io/buildah/stable:v1.26.0
     imagePullPolicy: "Always"
     command:
     - sleep
@@ -16,6 +16,10 @@ spec:
     env:
       - name: STORAGE_DRIVER
         value: "vfs"
+      - name: BUILDAH_ISOLATION
+        value: "chroot"
+      - name: _BUILDAH_STARTED_IN_USERNS
+        value: ""
     securityContext:
       capabilities:
         add:
