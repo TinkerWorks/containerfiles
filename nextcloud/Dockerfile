@@ -7,7 +7,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y default-jre && \
-    apt-get install -y libreoffice libreoffice-l10n-de libreoffice-help-de && \
     apt-get install -y ffmpeg imagemagick ghostscript
 
 RUN echo memory_limit=1024M > /usr/local/etc/php/conf.d/memory-limit.ini
