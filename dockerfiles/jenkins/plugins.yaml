@@ -29,4 +29,5 @@ plugins:
   - artifactId: blueocean-pipeline-api-impl
   - artifactId: blueocean-bitbucket-pipeline
   - artifactId: embeddable-build-status
-  
+  - artifactId: dark-theme
+  - artifactId: solarized-theme
