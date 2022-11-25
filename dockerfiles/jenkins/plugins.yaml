@@ -31,3 +31,5 @@ plugins:
   - artifactId: embeddable-build-status
   - artifactId: dark-theme
   - artifactId: solarized-theme
+  - artifactId: login-theme
+  - artifactId: theme-manager
