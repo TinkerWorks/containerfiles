@@ -43,6 +43,24 @@ pipeline {
                 }
             }
         }
+        stage('... Rollout ...') {
+            when {
+                anyOf {
+                    branch 'master'
+                }
+            }
+            steps{
+                container('kubectl') {
+                    sh '''
+                      namespaces=$(kubectl get namespaces | grep -v NAME | grep -v kube | awk "{print $1}")
+                      for ns in $namespaces ; do
+                        kubectl rollout restart -n $ns deployments
+                        kubectl rollout restart -n $ns daemonsets
+                      done
+                    '''
+                }
+            }
+        }
     }
 }
 
@@ -61,19 +79,6 @@ def runParallel(args) {
                 stage("Push ${name}") {
                     if (env.BRANCH_NAME == 'master') {
                         sh "buildah push ${name} docker://registry.tinker.haus/${name}:latest"
-                    }
-                }
-                container('kubectl') {
-                    stage("Rollout ${name}") {
-                        if (env.BRANCH_NAME == 'master') {
-                            sh """
-                              namespace=`kubectl get deployments -A | grep ${name} | head -n1 | awk '{print \$1}'`
-                              deployments=`kubectl get deployments -A | grep ${name} | awk '{print \$2}'`
-                              for dp in \${deployments} ; do
-                                kubectl rollout restart -n \${namespace} deployment \${dp}
-                              done
-                            """
-                        }
                     }
                 }
             }
