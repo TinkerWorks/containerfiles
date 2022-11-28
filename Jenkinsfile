@@ -23,6 +23,26 @@ pipeline {
                 """
             }
         }
+        stage('foo') {
+            parallel(
+		        'copy-1': {
+                    sh "echo copy1"
+		        },
+		        'copy-2': {
+                    sh "echo copy2"
+		        },
+		        'some other process': {
+			        parallel(
+				        'branch-1': {
+                            sh "echo copy3 - b1"
+				        },
+				        'branch-2': {
+                            sh "echo copy3 - b2"
+				        }
+			        )
+		        }
+	        )
+        }
         stage('BUILD & PUSH & ROLLOUT') {
             parallel {
                 stage('build & push') {
