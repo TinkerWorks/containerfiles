@@ -23,6 +23,7 @@ pipeline {
                 """
             }
         }
+        script {
         stage('foo') {
             parallel(
 		        'copy-1': {
@@ -42,6 +43,7 @@ pipeline {
 			        )
 		        }
 	        )
+        }
         }
         stage('BUILD & PUSH & ROLLOUT') {
             parallel {
