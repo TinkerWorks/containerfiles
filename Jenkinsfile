@@ -81,6 +81,14 @@ def runParallel(args) {
                         sh "buildah push ${name} docker://registry.tinker.haus/${name}:latest"
                     }
                 }
+                parallel {
+                    stage ('test1'){
+                        sh "echo test1"
+                    }
+                    stage ('test2'){
+                        sh "echo test2"
+                    }
+                }
             }
         }
     }]}
