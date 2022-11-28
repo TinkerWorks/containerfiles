@@ -83,12 +83,13 @@ def runParallel(args) {
                     if (env.BRANCH_NAME == 'master') {
                         sh "buildah push ${name} docker://registry.tinker.haus/${name}:latest"
                     }
-                }
-                parallel linux: {
-                    sh 'echo check 1'
-                },
-                    windows: {
-                    sh 'echo check 2'
+                    parallel linux: {
+                        sh 'echo check 1'
+                    },
+                        windows: {
+                        sh 'echo check 2'
+                    }
+
                 }
             }
         }
