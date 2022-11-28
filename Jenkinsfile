@@ -77,7 +77,7 @@ def runParallel(args) {
                     if (env.BRANCH_NAME == 'master') {
                         sh "buildah bud -t ${name} -f Dockerfile ."
                     }
-                    sh "build ${name}"
+                    sh "echo build ${name}"
                 }
                 stage("Push ${name}") {
                     if (env.BRANCH_NAME == 'master') {
