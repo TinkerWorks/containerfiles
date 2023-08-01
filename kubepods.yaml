@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: buildah
-    image: quay.io/buildah/stable:v1.26.0
+    image: quay.io/buildah/stable:latest
     imagePullPolicy: "Always"
     command:
     - sleep
