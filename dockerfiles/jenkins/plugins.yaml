@@ -33,4 +33,5 @@ plugins:
   - artifactId: solarized-theme
   - artifactId: login-theme
   - artifactId: theme-manager
-  - artifactId: pipeline-utility-steps
+  - artifactId: pipeline-utility-step
+  - artifactId: miniorange-two-factor
