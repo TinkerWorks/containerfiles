@@ -54,8 +54,7 @@ pipeline {
                     sh '''
                       namespaces=$(kubectl get namespaces | grep -v NAME | grep -v kube | awk "{print $1}")
                       for ns in $namespaces ; do
-                        kubectl rollout restart -n $ns deployments
-                        kubectl rollout restart -n $ns daemonsets
+                        kubectl rollout restart -n $ns all
                       done
                     '''
                 }
